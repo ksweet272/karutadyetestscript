@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- This webapp is a small script to auto generate dye tests for Karuta Bot -->
+<html>
+<head>
+  <title>Dye Tester Form</title>
+</head>
+<body>
+  <form id="dyeTest">
+    <!-- Input field for Card ID -->
+    <label for="cardId">Card ID:</label>
+    <input type="text" id="cardId" name="cardId" required><br><br>
+
+    <!-- Textarea for Dye IDs (separated by commas) -->
+    <label for="dyeIds">Dye IDs (separated by commas):</label><br>
+    <textarea id="dyeIds" name="dyeIds" rows="4" cols="50" required></textarea><br><br>
+
+    <!-- Submit button -->
+    <input type="submit" value="Submit">
+  </form>
+
+  <!-- Output div -->
+  <div id="output"></div>
+
+  <script>
+    // Event listener for form submission
+    document.getElementById("dyeTest").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Get input values
+      const cardId = document.getElementById("cardId").value;
+      const dyeIds = document.getElementById("dyeIds").value.trim().split(",");
+
+      // Generate script lines
+      let output = "";
+      dyeIds.forEach(dyeId => {
+        const trimmedDyeId = dyeId.trim();
+        if (trimmedDyeId !== "") {
+          output += `kdye ${cardId} ${trimmedDyeId}<br>`;
+        }
+      });
+
+      // Display output
+      document.getElementById("output").innerHTML = output;
+      // Reset the form
+      document.getElementById("dyeTest").reset();
+    });
+  </script>
+</body>
+</html>
